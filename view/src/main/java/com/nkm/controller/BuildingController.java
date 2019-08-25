@@ -45,14 +45,13 @@ public class BuildingController extends HttpServlet{
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BuildingDTO model = FormUltil.toModel(BuildingDTO.class, request);
-		System.out.println("model : "+model);
 		String action = request.getParameter("action");
 		String url = "";
 		if(action.equals("LIST")) {
 			url = "/views/building/list.jsp";
-			BuildingSearchBuilder buider = initBuildingBuider(model);
-			StringBuilder findAllAPI = initBuildingParams(model, buider, "http://localhost:8087/api/building");
-			StringBuilder getTotalItemAPI = initBuildingParams(model, buider, "http://localhost:8087/api/building/total");
+			BuildingSearchBuilder builder = initBuildingBuider(model);
+			StringBuilder findAllAPI = initBuildingParams(model, builder, "http://localhost:8087/api/building");
+			StringBuilder getTotalItemAPI = initBuildingParams(model, builder, "http://localhost:8087/api/building/total");
 			model.setTotalItem(buildingService.getTotalItem(getTotalItemAPI.toString()));
 			model.setTotalPage((int) Math.ceil((double) model.getTotalItem()/model.getMaxPageItem()));
 			model.setListResults(buildingService.findAll(findAllAPI.toString()));

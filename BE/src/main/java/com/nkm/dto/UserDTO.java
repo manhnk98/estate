@@ -11,21 +11,28 @@ public class UserDTO extends BaseDTO<UserDTO> {
 	private String fullName;
 	private Integer status;
 	private RoleEntity role;
-	private List<BuildingDTO> buildings;
+//	private List<BuildingDTO> buildings;
 	private String checked = "";
+//	private List<CustomerDTO> customers;
 	
+//	public List<CustomerDTO> getCustomers() {
+//		return customers;
+//	}
+//	public void setCustomers(List<CustomerDTO> customers) {
+//		this.customers = customers;
+//	}
 	public RoleEntity getRole() {
 		return role;
 	}
 	public void setRole(RoleEntity role) {
 		this.role = role;
 	}
-	public List<BuildingDTO> getBuildings() {
-		return buildings;
-	}
-	public void setBuildings(List<BuildingDTO> buildings) {
-		this.buildings = buildings;
-	}
+//	public List<BuildingDTO> getBuildings() {
+//		return buildings;
+//	}
+//	public void setBuildings(List<BuildingDTO> buildings) {
+//		this.buildings = buildings;
+//	}
 	public String getChecked() {
 		return checked;
 	}

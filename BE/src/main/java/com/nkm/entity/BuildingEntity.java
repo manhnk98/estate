@@ -92,8 +92,6 @@ public class BuildingEntity extends BaseEntity {
 	@ManyToMany(mappedBy = "buildings")
 	private List<UserEntity> staffs = new ArrayList<>();
 	
-	
-	
 	public List<UserEntity> getStaffs() {
 		return staffs;
 	}

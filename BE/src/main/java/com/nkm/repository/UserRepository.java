@@ -7,4 +7,5 @@ import com.nkm.repository.custom.UserRepositoryCustome;
 
 public interface UserRepository extends JpaRepository<UserEntity, Long>, UserRepositoryCustome{
 	boolean existsByIdAndBuildingsId(Long userId, Long buildingId);
+	boolean existsByIdAndCustomersId(Long id, Long parseLong);
 }

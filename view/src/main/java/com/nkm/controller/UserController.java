@@ -36,15 +36,27 @@ public class UserController extends HttpServlet{
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idStr = request.getParameter("id");
-		//load user
-		UserDTO users = new UserDTO();
-		String findAll = "http://localhost:8087/api/user?role=STAFF&buildingId=" + idStr;
-		users.setListResults(userService.findAll(findAll));
+		// load user for assignmentBuilding
+		String ass = request.getParameter("assignment");
+		if (ass.equals("BUILDING")){
+			UserDTO users = new UserDTO();
+			String findAll = "http://localhost:8087/api/user?role=STAFF&buildingId=" + idStr;
+			users.setListResults(userService.findAll(findAll));
+			String url = "/views/user/employeeList.jsp";
+			request.setAttribute("users", users);
+			request.setAttribute("buildingId", idStr);
+			RequestDispatcher rd = request.getRequestDispatcher(url);
+			rd.forward(request, response);
+		} else if (ass.equals("CUSTOMER")){
+			UserDTO users = new UserDTO();
+			String findAll = "http://localhost:8087/api/user?role=STAFF&customerId=" + idStr;
+			users.setListResults(userService.findAll(findAll));
+			String url = "/views/customer/staffList.jsp";
+			request.setAttribute("users", users);
+			request.setAttribute("customerId", idStr);
+			RequestDispatcher rd = request.getRequestDispatcher(url);
+			rd.forward(request, response);
+		}
 
-		String url = "/views/user/employeeList.jsp";
-		request.setAttribute("users", users);
-		request.setAttribute("buildingId", idStr);
-		RequestDispatcher rd = request.getRequestDispatcher(url);
-		rd.forward(request, response);
 	}
 }

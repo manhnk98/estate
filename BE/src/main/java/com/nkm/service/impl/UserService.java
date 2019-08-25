@@ -28,7 +28,14 @@ public class UserService implements IUserService {
 		List<UserDTO> results = new ArrayList<>();		
 		for (UserEntity userEntity : userEntities) {
 			UserDTO userDTO = userConverter.convertToDTO(userEntity);
-			boolean rs = userRepository.existsByIdAndBuildingsId(userEntity.getId(), Long.parseLong(userSearchBuilder.getBuildingId()));
+			boolean rs = false;
+			if (userSearchBuilder.getBuildingId() != null) {
+				// building
+				rs = userRepository.existsByIdAndBuildingsId(userEntity.getId(), Long.parseLong(userSearchBuilder.getBuildingId()));
+			} else if (userSearchBuilder.getCustomerId() != null) {
+				// customer
+				rs = userRepository.existsByIdAndCustomersId(userEntity.getId(), Long.parseLong(userSearchBuilder.getCustomerId()));
+			}
 			if (rs) {
 				userDTO.setChecked("checked");
 			}
@@ -36,5 +43,4 @@ public class UserService implements IUserService {
 		}
 		return results;
 	}
-
 }

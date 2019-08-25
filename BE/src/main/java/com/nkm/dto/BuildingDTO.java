@@ -1,7 +1,5 @@
 package com.nkm.dto;
 
-import org.springframework.web.multipart.MultipartFile;
-
 public class BuildingDTO extends BaseDTO<BuildingDTO> {
 
 	private String name; // tên

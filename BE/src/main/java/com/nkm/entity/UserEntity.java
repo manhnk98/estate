@@ -34,7 +34,17 @@ public class UserEntity extends BaseEntity {
 	@JoinTable(name = "assignmentbuilding", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "building_id"))
 	private List<BuildingEntity> buildings = new ArrayList<>();
 	
-	
+	@ManyToMany
+	@JoinTable(name = "assignmentcustomer", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "customer_id"))
+	private List<CustomerEntity> customers = new ArrayList<>();
+
+	public List<CustomerEntity> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<CustomerEntity> customers) {
+		this.customers = customers;
+	}
 
 	public List<BuildingEntity> getBuildings() {
 		return buildings;

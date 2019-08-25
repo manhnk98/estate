@@ -32,6 +32,7 @@ public class UserAPI {
 				.setName((String) userQuery.get("name"))
 				.setRole((String) userQuery.get("role"))
 				.setBuildingId((String) userQuery.get("buildingId"))
+				.setCustomerId((String) userQuery.get("customerId"))
 				.build();
 		return builder;
 	}

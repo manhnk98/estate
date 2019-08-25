@@ -14,6 +14,8 @@ public class HttpClientUtils {
 
     public static String httpGet(String url){
 
+        url = url.replaceAll(" ", "%20");
+
         DefaultHttpClient defaultHttpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(url);
         try{

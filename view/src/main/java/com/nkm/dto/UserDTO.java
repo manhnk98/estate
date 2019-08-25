@@ -14,6 +14,7 @@ public class UserDTO extends BaseDTO<UserDTO> {
 	private RoleEntity role;
 	private List<BuildingDTO> buildings;
 	private String checked = "";
+	private List<CustomerDTO> customers;
 
 	public String getUserName() {
 		return userName;
@@ -69,5 +70,13 @@ public class UserDTO extends BaseDTO<UserDTO> {
 
 	public void setChecked(String checked) {
 		this.checked = checked;
+	}
+
+	public List<CustomerDTO> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(List<CustomerDTO> customers) {
+		this.customers = customers;
 	}
 }

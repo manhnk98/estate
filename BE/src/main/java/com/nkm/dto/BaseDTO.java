@@ -1,13 +1,13 @@
 package com.nkm.dto;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class BaseDTO<T> {
 	private Long id;
-	private Timestamp createddate;
-	private Timestamp modifieddate;
+	private Date createddate;
+	private Date modifieddate;
 	private String createdby;
 	private String modifiedby;
 	private int maxPageItem;
@@ -19,6 +19,24 @@ public class BaseDTO<T> {
 	private Long totalItem;
 	private String sortName;
 	private String sortBy;
+
+	
+	
+	public Date getCreateddate() {
+		return createddate;
+	}
+
+	public void setCreateddate(Date createddate) {
+		this.createddate = createddate;
+	}
+
+	public Date getModifieddate() {
+		return modifieddate;
+	}
+
+	public void setModifieddate(Date modifieddate) {
+		this.modifieddate = modifieddate;
+	}
 
 	public String getSortName() {
 		return sortName;
@@ -92,22 +110,6 @@ public class BaseDTO<T> {
 		this.id = id;
 	}
 
-	public Timestamp getCreateddate() {
-		return createddate;
-	}
-
-	public void setCreateddate(Timestamp createddate) {
-		this.createddate = createddate;
-	}
-
-	public Timestamp getModifieddate() {
-		return modifieddate;
-	}
-
-	public void setModifieddate(Timestamp modifieddate) {
-		this.modifieddate = modifieddate;
-	}
-
 	public String getCreatedby() {
 		return createdby;
 	}
@@ -131,5 +133,6 @@ public class BaseDTO<T> {
 	public void setListResults(List<T> listResults) {
 		this.listResults = listResults;
 	}
+	
 
 }

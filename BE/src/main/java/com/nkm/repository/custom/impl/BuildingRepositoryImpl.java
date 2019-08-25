@@ -101,7 +101,6 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustome {
 
 	private StringBuilder buildWhereClause(BuildingSearchBuilder builder) {
 		StringBuilder whereClause = new StringBuilder();
-		whereClause.append(" AND A.status = 1 ");
 		if (StringUtils.isNotBlank(builder.getCostRentFrom())) {
 			whereClause.append(" AND costrent >= " + builder.getCostRentFrom() + " ");
 		}
@@ -127,6 +126,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustome {
 		return whereClause;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Long count(BuildingSearchBuilder builder) {
 		try {

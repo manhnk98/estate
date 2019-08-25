@@ -35,7 +35,6 @@ public class BuildingService implements IBuildingService{
 	@Override
 	public BuildingDTO save(BuildingDTO buildingDTO) {
 		BuildingEntity buildingEntity = buildingConverter.convertToEntity(buildingDTO);
-		
 		if (buildingDTO.getId() != null) {
 			// update
 			BuildingEntity oldBuilding = buildingRepository.findById(buildingDTO.getId()).get();
