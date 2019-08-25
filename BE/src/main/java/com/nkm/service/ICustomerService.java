@@ -16,6 +16,6 @@ public interface ICustomerService {
 	void deleteCustomers(Long[] ids);
 	int count(CustomerSearchBuilder builder);
 	void handoverBuilding(AssignmentCustomerInput ass);
-	List<AssignmentCustomerDTO> findAllByKeyAndId(Long id, String key);
+	List<AssignmentCustomerDTO> findAllByKeyAndId(Long id);
 	void activityUpdate(AssignmentCustomerDTO dto);
 }

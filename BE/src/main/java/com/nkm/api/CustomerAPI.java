@@ -43,9 +43,9 @@ public class CustomerAPI {
 		return customerService.findById(id);
 	}
 	
-	@GetMapping(value = {"/api/customer/{id}/{key}"})
-	public List<AssignmentCustomerDTO> findByKey(@PathVariable("id") Long id, @PathVariable("key") String key) {
-		return customerService.findAllByKeyAndId(id, key);
+	@GetMapping(value = {"/api/customer/{id}"})
+	public List<AssignmentCustomerDTO> findByKey(@PathVariable("id") Long id) {
+		return customerService.findAllByKeyAndId(id);
 	}
 	
 	@GetMapping(value = {"/api/customer/totalItem"})

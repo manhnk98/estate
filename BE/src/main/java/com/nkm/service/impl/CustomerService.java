@@ -84,8 +84,8 @@ public class CustomerService implements ICustomerService {
 	}
 
 	@Override
-	public List<AssignmentCustomerDTO> findAllByKeyAndId(Long id, String key) {
-		List<AssignmentCustomerEntity> entities = customerRepository.findAllByKeyAndId(id, key);
+	public List<AssignmentCustomerDTO> findAllByKeyAndId(Long id) {
+		List<AssignmentCustomerEntity> entities = customerRepository.findAllByKeyAndId(id);
 		List<AssignmentCustomerDTO> lstDtos = entities.stream().map(item -> assignmentCustomerConverter.convertToDTO(item)).collect(Collectors.toList());
 		return lstDtos;
 	}

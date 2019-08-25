@@ -108,12 +108,11 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustome {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<AssignmentCustomerEntity> findAllByKeyAndId(Long id, String key) {
+	public List<AssignmentCustomerEntity> findAllByKeyAndId(Long id) {
 		try {
-			StringBuilder sql = new StringBuilder("SELECT * FROM assignmentcustomer WHERE 1=1 AND customer_id = :cusId AND type = :type");
+			StringBuilder sql = new StringBuilder("SELECT * FROM assignmentcustomer WHERE 1=1 AND customer_id = :cusId");
 			Query query = entityManager.createNativeQuery(sql.toString(), AssignmentCustomerEntity.class);
 			query.setParameter("cusId", id);
-			query.setParameter("type", key);
 			List<AssignmentCustomerEntity> lstRs = query.getResultList();
 			return lstRs;
 		} catch (Exception e) {

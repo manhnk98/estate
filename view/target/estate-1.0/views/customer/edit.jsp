@@ -36,7 +36,7 @@
 							<div class="widget-main">
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-xs-2 control-label no-padding-left" for="form-field-1-1"> Tên khách hàng </label>
+										<label class="col-xs-2 control-label no-padding-left"> Tên khách hàng </label>
 										<div class="col-xs-10">
 											<input type="text" class="form-control" name="fullName" value="${model.fullName}">
 										</div>
@@ -44,7 +44,7 @@
 								</div>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-xs-2 control-label no-padding-left" for="form-field-1-1"> SĐT </label>
+										<label class="col-xs-2 control-label no-padding-left"> SĐT </label>
 										<div class="col-xs-10">
 											<input type="text" class="form-control" name="phoneNumber" value="${model.phoneNumber}" />
 										</div>
@@ -52,7 +52,7 @@
 								</div>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-xs-2 control-label no-padding-left" for="form-field-1-1"> Email </label>
+										<label class="col-xs-2 control-label no-padding-left"> Email </label>
 										<div class="col-xs-10">
 											<input type="text" class="form-control" name="email" value="${model.email}" />
 										</div>
@@ -60,7 +60,7 @@
 								</div>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-xs-2 control-label no-padding-left" for="form-field-1-1"> Tên công ty </label>
+										<label class="col-xs-2 control-label no-padding-left" > Tên công ty </label>
 										<div class="col-xs-10">
 											<input type="text" class="form-control" name="companyName" value="${model.companyName}" />
 										</div>
@@ -69,7 +69,7 @@
 
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-xs-2 control-label no-padding-left" for="form-field-1-1"> Nhu cầu </label>
+										<label class="col-xs-2 control-label no-padding-left"> Nhu cầu </label>
 										<div class="col-xs-10">
 											<input type="text" class="form-control" name="need" value="${model.need}" />
 										</div>
@@ -77,7 +77,7 @@
 								</div>
 								<div class="form-horizontal">
 									<div class="form-group">
-										<label class="col-xs-2 control-label no-padding-left" for="form-field-1-1"> Ghi chú </label>
+										<label class="col-xs-2 control-label no-padding-left"> Ghi chú </label>
 										<div class="col-xs-10">
 											<input type="text" class="form-control" name="notes" value="${model.notes}" />
 										</div>
@@ -122,11 +122,13 @@
 						</tr>
 						</thead>
 						<tbody>
-						<c:forEach var="item" items="${CSKH}">
-							<tr>
-								<td>${item.createddate}</td>
-								<td>${item.message}</td>
-							</tr>
+						<c:forEach var="item" items="${assCustomer}">
+							<c:if test="${item.type == 'CSKH'}">
+								<tr>
+									<td>${item.createddate}</td>
+									<td>${item.message}</td>
+								</tr>
+							</c:if>
 						</c:forEach>
 						<tr>
 							<td></td>
@@ -154,11 +156,13 @@
 						</tr>
 						</thead>
 						<tbody>
-						<c:forEach var="item" items="${SEE}">
-							<tr>
-								<td>${item.createddate}</td>
-								<td>${item.message}</td>
-							</tr>
+						<c:forEach var="item" items="${assCustomer}">
+							<c:if test="${item.type == 'SEE'}">
+								<tr>
+									<td>${item.createddate}</td>
+									<td>${item.message}</td>
+								</tr>
+							</c:if>
 						</c:forEach>
 						<tr>
 							<td></td>
@@ -227,14 +231,13 @@
         var customerId = $('#customerId').val();
         var formData = $('#formId').serializeArray();
         var data = {};
-        var buildingTypes = [];
         $.each(formData, function(index, v) {
             data["" + v.name + ""] = v.value;
         });
         if (customerId == '') {
             addCustomer(data);
         } else {
-            editCustomer(data, buildingId);
+            editCustomer(data);
         }
     }
 
@@ -254,14 +257,14 @@
         });
     }
 
-    function editCustomer(data, id) {
+    function editCustomer(data) {
         $.ajax({
             url: 'http://localhost:8087/api/customer',
             data: JSON.stringify(data),
             type: 'PUT',
             contentType: 'application/json',
             success: function(data) {
-                window.location.href = "${customerURL}?action=EDIT&id=" + id + "&message=update_success";
+                window.location.href = "${customerURL}?action=EDIT&id=" + data.id + "&message=update_success";
             },
             error: function() {
                 window.location.href = "${customerURL}?action=LIST&page=1&maxPageItem=10&sortName=name&sortBy=ASC&message=error_system";

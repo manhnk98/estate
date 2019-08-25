@@ -50,15 +50,10 @@ public class CustomerController extends HttpServlet {
                 String URLfindById = "http://localhost:8087/api/"+model.getId()+"/customer";
                 model = customerService.findById(URLfindById);
 
-                String URLfindByCSKH = "http://localhost:8087/api/customer/"+model.getId()+"/CSKH";
-                List<AssignmentCustomerDTO> assCskhDTO = new ArrayList<>();
-                assCskhDTO = customerService.findAllByKey(URLfindByCSKH);
-                request.setAttribute("CSKH", assCskhDTO);
-
-                String URLfindBySEE = "http://localhost:8087/api/customer/"+model.getId()+"/SEE";
-                List<AssignmentCustomerDTO> assSeeDTO = new ArrayList<>();
-                assSeeDTO = customerService.findAllByKey(URLfindBySEE);
-                request.setAttribute("SEE", assSeeDTO);
+                String URLfindByCSKH = "http://localhost:8087/api/customer/"+model.getId();
+                List<AssignmentCustomerDTO> assCustomer = new ArrayList<>();
+                assCustomer = customerService.findAllByKey(URLfindByCSKH);
+                request.setAttribute("assCustomer", assCustomer);
             }
         }
         request.setAttribute("model", model);

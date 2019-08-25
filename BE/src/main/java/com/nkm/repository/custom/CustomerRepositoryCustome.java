@@ -12,5 +12,5 @@ public interface CustomerRepositoryCustome {
 	List<CustomerEntity> findAll(CustomerSearchBuilder builder, Pageable pageable);
 	Long count(CustomerSearchBuilder builder);
 	void deleteCustomer(Long id);
-	List<AssignmentCustomerEntity> findAllByKeyAndId(Long id, String key);
+	List<AssignmentCustomerEntity> findAllByKeyAndId(Long id);
 }
