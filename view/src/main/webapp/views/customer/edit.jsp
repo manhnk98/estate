@@ -105,12 +105,12 @@
 
 			<c:if test="${not empty model.id}">
 			<h2>CHĂM SÓC KHÁCH HÀNG
-				<button
-						id="btnCSKH"
-						class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
-						data-toggle="tooltip" title='Thêm hoạt động'> <span><i
-						class="fa fa-plus-circle bigger-110 purple"></i></span>
-				</button>
+				<%--<button--%>
+						<%--id="btnCSKH"--%>
+						<%--class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"--%>
+						<%--data-toggle="tooltip" title='Thêm hoạt động'> <span><i--%>
+						<%--class="fa fa-plus-circle bigger-110 purple"></i></span>--%>
+				<%--</button>--%>
 			</h2>
 			<div class="container row">
 				<div class="col-xs-12">
@@ -131,7 +131,14 @@
 							</c:if>
 						</c:forEach>
 						<tr>
-							<td></td>
+							<td>
+								<button
+									id="btnCSKH"
+									class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
+									data-toggle="tooltip" title='Thêm hoạt động'> <span><i
+									class="fa fa-plus-circle bigger-110 purple"></i></span>
+								</button>
+							</td>
 							<td><input type="text" style="width:100%" id="msgCskh"/></td>
 						</tr>
 						</tbody>
@@ -139,12 +146,12 @@
 				</div>
 			</div>
 			<h2>ĐI XEM
-				<button
-						id="btnSEE"
-						class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
-						data-toggle="tooltip" title='Thêm hoạt động'> <span><i
-						class="fa fa-plus-circle bigger-110 purple"></i></span>
-				</button>
+				<%--<button--%>
+						<%--id="btnSEE"--%>
+						<%--class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"--%>
+						<%--data-toggle="tooltip" title='Thêm hoạt động'> <span><i--%>
+						<%--class="fa fa-plus-circle bigger-110 purple"></i></span>--%>
+				<%--</button>--%>
 			</h2>
 			<div class="container row">
 				<div class="col-xs-12">
@@ -165,7 +172,14 @@
 							</c:if>
 						</c:forEach>
 						<tr>
-							<td></td>
+							<td>
+								<button
+										id="btnSEE"
+										class="dt-button buttons-colvis btn btn-white btn-primary btn-bold"
+										data-toggle="tooltip" title='Thêm hoạt động'> <span><i
+										class="fa fa-plus-circle bigger-110 purple"></i></span>
+								</button>
+							</td>
 							<td><input type="text" style="width:100%" id="msgSee"/></td>
 						</tr>
 						</tbody>
@@ -178,7 +192,7 @@
 	</div>
 </div>
 
-<input type="hidden" name="userId" value="1" id="userId"/>
+<input type="hidden" name="userId" value="3" id="userId"/>
 			</c:if>
 
 <!-- /.main-content -->
@@ -197,7 +211,13 @@
 		data['userId'] = userId;
         data['customerId'] = customerId;
         data['message'] = msg;
-        activityUpdate(data, customerId);
+        msg = msg.trim();
+        if(msg !== null && msg !== ''  && msg!==undefined) {
+            activityUpdate(data, customerId);
+        } else {
+            alert('message không hợp lệ !');
+		}
+
     });
 
     $('#btnSEE').click(function() {
@@ -209,7 +229,12 @@
         data['userId'] = userId;
         data['customerId'] = customerId;
         data['message'] = msg;
-        activityUpdate(data, customerId);
+        msg = msg.trim();
+        if(msg !== null && msg !== ''  && msg!==undefined) {
+            activityUpdate(data, customerId);
+        } else {
+            alert('message không hợp lệ !');
+        }
     });
 
     function activityUpdate(data, id){

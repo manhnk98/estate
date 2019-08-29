@@ -9,7 +9,7 @@ import com.nkm.entity.AssignmentCustomerEntity;
 import com.nkm.entity.CustomerEntity;
 
 public interface CustomerRepositoryCustome {
-	List<CustomerEntity> findAll(CustomerSearchBuilder builder, Pageable pageable);
+	List<CustomerEntity> findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId);
 	Long count(CustomerSearchBuilder builder);
 	void deleteCustomer(Long id);
 	List<AssignmentCustomerEntity> findAllByKeyAndId(Long id);

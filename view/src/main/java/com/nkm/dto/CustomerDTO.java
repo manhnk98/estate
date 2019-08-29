@@ -12,7 +12,8 @@ public class CustomerDTO extends BaseDTO<CustomerDTO> {
 	private String companyName;
 	private String need;
 	private String notes;
-//	private List<UserEntity> users;
+	private List<UserDTO> users;
+	private String idStaff;
 	
 	public String getFullName() {
 		return fullName;
@@ -52,11 +53,19 @@ public class CustomerDTO extends BaseDTO<CustomerDTO> {
 	}
 
 
-//	public List<UserEntity> getUsers() {
-//		return users;
-//	}
-//
-//	public void setUsers(List<UserEntity> users) {
-//		this.users = users;
-//	}
+	public List<UserDTO> getUsers() {
+		return users;
+	}
+
+	public void setUsers(List<UserDTO> users) {
+		this.users = users;
+	}
+
+	public String getIdStaff() {
+		return idStaff;
+	}
+
+	public void setIdStaff(String idStaff) {
+		this.idStaff = idStaff;
+	}
 }

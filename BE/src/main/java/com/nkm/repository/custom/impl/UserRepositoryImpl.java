@@ -29,6 +29,4 @@ public class UserRepositoryImpl implements UserRepositoryCustome {
 		List<UserEntity> rs = query.getResultList();
 		return rs;
 	}
-	
-	
 }

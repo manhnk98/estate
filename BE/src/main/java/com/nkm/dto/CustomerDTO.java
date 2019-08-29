@@ -1,5 +1,7 @@
 package com.nkm.dto;
 
+import java.util.List;
+
 public class CustomerDTO extends BaseDTO<CustomerDTO> {
 	
 	private String fullName;
@@ -8,14 +10,15 @@ public class CustomerDTO extends BaseDTO<CustomerDTO> {
 	private String companyName;
 	private String need;
 	private String notes;
-//	private List<UserEntity> users;
 	
-//	public List<UserEntity> getUsers() {
-//		return users;
-//	}
-//	public void setUsers(List<UserEntity> users) {
-//		this.users = users;
-//	}
+	private List<UserDTO> users;
+	
+	public List<UserDTO> getUsers() {
+		return users;
+	}
+	public void setUsers(List<UserDTO> users) {
+		this.users = users;
+	}
 	public String getFullName() {
 		return fullName;
 	}

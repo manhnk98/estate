@@ -17,6 +17,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.nkm.api.output.building.ListBuildingAndCount;
 import com.nkm.builder.BuildingSearchBuilder;
 import com.nkm.entity.BuildingEntity;
 import com.nkm.repository.custom.BuildingRepositoryCustome;
@@ -37,6 +38,7 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustome {
 			sql = createSQLfindAll(sql, properties);
 			sql.append(whereClause);
 			Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
+			
 			if (pageable != null) {
 				query.setFirstResult((int) pageable.getOffset());
 				query.setMaxResults(pageable.getPageSize());

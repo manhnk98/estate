@@ -3,7 +3,9 @@ package com.nkm.controller;
 import com.nkm.builder.CustomerSearchBuilder;
 import com.nkm.dto.AssignmentCustomerDTO;
 import com.nkm.dto.CustomerDTO;
+import com.nkm.dto.UserDTO;
 import com.nkm.service.ICustomerService;
+import com.nkm.service.IUserService;
 import com.nkm.utils.FormUltil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
@@ -32,6 +34,9 @@ public class CustomerController extends HttpServlet {
     @Inject
     private ICustomerService customerService;
 
+    @Inject
+    private IUserService userService;
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
         CustomerDTO model = FormUltil.toModel(CustomerDTO.class, request);
         String action = request.getParameter("action");
@@ -44,12 +49,16 @@ public class CustomerController extends HttpServlet {
             model.setTotalItem(customerService.getTotalItem(getTotalItemAPI.toString()));
             model.setTotalPage((int) Math.ceil((double) model.getTotalItem()/model.getMaxPageItem()));
             model.setListResults(customerService.findAll(findAllAPI.toString()));
+
+            StringBuilder findAllStaff = new StringBuilder("http://localhost:8087/api/user?role=STAFF");
+            List<UserDTO> staffs = userService.findAll(findAllStaff.toString());
+            request.setAttribute("staffs", staffs);
+
         } else if(action.equals("EDIT")) {
             url = "/views/customer/edit.jsp";
             if (model.getId() != null) {
                 String URLfindById = "http://localhost:8087/api/"+model.getId()+"/customer";
                 model = customerService.findById(URLfindById);
-
                 String URLfindByCSKH = "http://localhost:8087/api/customer/"+model.getId();
                 List<AssignmentCustomerDTO> assCustomer = new ArrayList<>();
                 assCustomer = customerService.findAllByKey(URLfindByCSKH);
@@ -89,6 +98,7 @@ public class CustomerController extends HttpServlet {
                 .setFullName(model.getFullName())
                 .setEmail(model.getEmail())
                 .setPhoneNumber(model.getPhoneNumber())
+                .setIdStaff(model.getIdStaff())
                 .build();
         return builder;
     }

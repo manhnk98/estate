@@ -34,6 +34,7 @@ public class UserSearchBuilder {
 		private String role;
 		private String buildingId;
 		private String customerId;
+		
 
 		public Builder setName(String name) {
 			this.name = name;

@@ -52,8 +52,8 @@ public class CustomerService implements ICustomerService {
 	}
 
 	@Override
-	public List<CustomerDTO> findAll(CustomerSearchBuilder builder, Pageable pageable) {
-		List<CustomerEntity> lstEntities = customerRepository.findAll(builder, pageable);
+	public List<CustomerDTO> findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId) {
+		List<CustomerEntity> lstEntities = customerRepository.findAll(builder, pageable, staffId);
 		List<CustomerDTO> lstDtos = lstEntities.stream().map(item -> customerConverter.convertToDTO(item)).collect(Collectors.toList());
 		return lstDtos;
 	}

@@ -12,6 +12,7 @@ import com.nkm.utils.FormUltil;
 import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 
+import javax.inject.Inject;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,13 +31,13 @@ public class UserController extends HttpServlet{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private IUserService userService = new UserService();
+	@Inject
+	private IUserService userService;
 
 	final static Logger logger = Logger.getLogger(UserController.class);
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idStr = request.getParameter("id");
-		// load user for assignmentBuilding
 		String ass = request.getParameter("assignment");
 		if (ass.equals("BUILDING")){
 			UserDTO users = new UserDTO();

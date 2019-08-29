@@ -11,7 +11,7 @@ import com.nkm.dto.CustomerDTO;
 
 public interface ICustomerService {
 	CustomerDTO save(CustomerDTO customerDTO);
-	List<CustomerDTO> findAll(CustomerSearchBuilder builder, Pageable pageable);
+	List<CustomerDTO> findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId);
 	CustomerDTO findById(Long id);
 	void deleteCustomers(Long[] ids);
 	int count(CustomerSearchBuilder builder);

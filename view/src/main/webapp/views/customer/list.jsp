@@ -66,12 +66,12 @@
 											<div class="col-sm-4">
 												<label>Nhân viên phụ trách</label>
 												<div class="fg-line">
-													<select class="form-control" name="district">
+													<select class="form-control" name="idStaff">
 														<option value="">Chọn nhân viên</option>
-														<%--<c:forEach var="item" items="${districts}">--%>
-															<%--<option value="${item.key}"--%>
-																<%--${item.key == model.district ? 'selected' : ''}>${item.value}</option>--%>
-														<%--</c:forEach>--%>
+														<c:forEach var="item" items="${staffs}">
+															<option value="${item.id}" ${item.id == model.idStaff ? 'selected' : ''} >${item.fullName}</option>
+														</c:forEach>
+														<%--item == user, model == customer--%>
 													</select>
 												</div>
 											</div>

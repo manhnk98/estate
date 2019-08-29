@@ -28,12 +28,21 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustome {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CustomerEntity> findAll(CustomerSearchBuilder builder, Pageable pageable) {
+	public List<CustomerEntity> findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId) {
 		try {
 			Map<String, Object> properties = buildMapSearch(builder);
-			StringBuilder sql = new StringBuilder("SELECT * FROM customer WHERE 1=1 ");
+			StringBuilder sql = new StringBuilder("SELECT * FROM customer as cus");
+			if (staffId != null) {
+				sql.append(" inner join assignmentcustomer as ass on ass.customer_id = cus.id inner join user on ass.user_id = user.id ");
+				sql.append(" where user.status = 1 and user.id = :staffId and ass.type IS NULL ");
+			} else {
+				sql.append(" where 1=1 ");
+			}
 			sql = createSQLfindAll(sql, properties);
 			Query query = entityManager.createNativeQuery(sql.toString(), CustomerEntity.class);
+			if (staffId != null) {
+				query.setParameter("staffId", staffId);
+			}
 			if (pageable != null) {
 				query.setFirstResult((int) pageable.getOffset());
 				query.setMaxResults(pageable.getPageSize());
@@ -59,7 +68,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustome {
 			for (int j = 0; j < params.length; j++) {
 				if (values[j] instanceof String) {
 					if (StringUtils.isNotBlank(values[j].toString())) {
-						rs.append(" AND LOWER(" + params[j] + ") LIKE LOWER('%" + values[j] + "%') ");
+						rs.append(" AND LOWER(" +"cus."+ params[j] + ") LIKE LOWER('%" + values[j] + "%') ");
 					}
 				} else if (values[j] instanceof Integer || values[j] instanceof Long) {
 					rs.append(" AND " + params[j] + " = " + values[j] + " ");
@@ -89,7 +98,7 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustome {
 	public Long count(CustomerSearchBuilder builder) {
 		try {
 			Map<String, Object> properties = buildMapSearch(builder);
-			StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM customer WHERE 1=1 ");
+			StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM customer as cus WHERE 1=1 ");
 			sql = createSQLfindAll(sql, properties);
 			Query query = entityManager.createNativeQuery(sql.toString());
 			List<BigInteger> resultLst = query.getResultList();
