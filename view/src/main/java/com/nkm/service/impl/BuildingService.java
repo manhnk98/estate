@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nkm.api.ListBuildingAndCount;
 import com.nkm.controller.BuildingController;
 import com.nkm.utils.HttpClientUtils;
 import org.apache.commons.lang.StringUtils;
@@ -166,6 +167,18 @@ public class BuildingService implements IBuildingService {
 		}
 		return new BuildingDTO();
 	}
+
+    @Override
+    public ListBuildingAndCount findAllBuilding(String url) {
+        String result = HttpClientUtils.httpGet(url);
+        try {
+            ListBuildingAndCount rs = new ObjectMapper().readValue(result, ListBuildingAndCount.class);
+            return rs;
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return new ListBuildingAndCount();
+    }
 
 
 }

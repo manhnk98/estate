@@ -30,8 +30,10 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustome {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<BuildingEntity> findAll(BuildingSearchBuilder builder, Pageable pageable) {
+	public ListBuildingAndCount findAll(BuildingSearchBuilder builder, Pageable pageable) {
 		try {
+			ListBuildingAndCount rs = new ListBuildingAndCount();
+			
 			Map<String, Object> properties = buildMapSearch(builder);
 			StringBuilder sql = new StringBuilder("SELECT * FROM building AS A WHERE 1=1 ");
 			StringBuilder whereClause = buildWhereClause(builder);
@@ -39,17 +41,23 @@ public class BuildingRepositoryImpl implements BuildingRepositoryCustome {
 			sql.append(whereClause);
 			Query query = entityManager.createNativeQuery(sql.toString(), BuildingEntity.class);
 			
+			StringBuilder sqlCount = new StringBuilder("SELECT COUNT(*) FROM building AS A WHERE 1=1 ");
+			sqlCount.append(whereClause);
+			Query queryCount = entityManager.createNativeQuery(sqlCount.toString());
+			List<BigInteger> resultLst = queryCount.getResultList();
+			rs.setCount(Long.parseLong(resultLst.get(0).toString(), 10));
+			
 			if (pageable != null) {
 				query.setFirstResult((int) pageable.getOffset());
 				query.setMaxResults(pageable.getPageSize());
 			}
 			List<BuildingEntity> lstRs = query.getResultList();
-			System.out.println(lstRs);
-			return query.getResultList();
+			rs.setBuildingEntities(lstRs);
+			return rs;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
-		return new ArrayList<BuildingEntity>();
+		return new ListBuildingAndCount();
 	}
 
 	private StringBuilder createSQLfindAll(StringBuilder rs, Map<String, Object> properties) {

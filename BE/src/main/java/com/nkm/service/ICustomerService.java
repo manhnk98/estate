@@ -5,13 +5,14 @@ import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 import com.nkm.api.input.building.AssignmentCustomerInput;
+import com.nkm.api.output.customer.ListCustomerAndCount;
 import com.nkm.builder.CustomerSearchBuilder;
 import com.nkm.dto.AssignmentCustomerDTO;
 import com.nkm.dto.CustomerDTO;
 
 public interface ICustomerService {
 	CustomerDTO save(CustomerDTO customerDTO);
-	List<CustomerDTO> findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId);
+	ListCustomerAndCount findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId);
 	CustomerDTO findById(Long id);
 	void deleteCustomers(Long[] ids);
 	int count(CustomerSearchBuilder builder);

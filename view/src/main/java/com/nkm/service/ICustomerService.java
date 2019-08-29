@@ -1,5 +1,6 @@
 package com.nkm.service;
 
+import com.nkm.api.ListCustomerAndCount;
 import com.nkm.dto.AssignmentCustomerDTO;
 import com.nkm.dto.CustomerDTO;
 
@@ -11,4 +12,5 @@ public interface ICustomerService {
     void update(String urlNewBuilding);
     CustomerDTO findById(String url);
     List<AssignmentCustomerDTO> findAllByKey(String urLfindByKey);
+    ListCustomerAndCount findAllCustomer(String url);
 }

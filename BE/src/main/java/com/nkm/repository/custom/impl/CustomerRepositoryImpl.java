@@ -15,6 +15,7 @@ import org.apache.commons.lang.StringUtils;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
+import com.nkm.api.output.customer.ListCustomerAndCount;
 import com.nkm.builder.CustomerSearchBuilder;
 import com.nkm.entity.AssignmentCustomerEntity;
 import com.nkm.entity.CustomerEntity;
@@ -28,31 +29,50 @@ public class CustomerRepositoryImpl implements CustomerRepositoryCustome {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<CustomerEntity> findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId) {
+	public ListCustomerAndCount findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId) {
 		try {
+			ListCustomerAndCount rs = new ListCustomerAndCount();
+			
 			Map<String, Object> properties = buildMapSearch(builder);
-			StringBuilder sql = new StringBuilder("SELECT * FROM customer as cus");
+			StringBuilder sql = new StringBuilder("SELECT * FROM customer as cus ");
+			
+			StringBuilder clause = new StringBuilder();
 			if (staffId != null) {
-				sql.append(" inner join assignmentcustomer as ass on ass.customer_id = cus.id inner join user on ass.user_id = user.id ");
-				sql.append(" where user.status = 1 and user.id = :staffId and ass.type IS NULL ");
+				clause.append(" inner join assignmentcustomer as ass on ass.customer_id = cus.id inner join user on ass.user_id = user.id ");
+				clause.append(" where user.status = 1 and user.id = :staffId and ass.type IS NULL ");
 			} else {
-				sql.append(" where 1=1 ");
+				clause.append(" where 1=1 ");
 			}
+			sql.append(clause);
 			sql = createSQLfindAll(sql, properties);
 			Query query = entityManager.createNativeQuery(sql.toString(), CustomerEntity.class);
+			
+			StringBuilder sqlCount = new StringBuilder("SELECT COUNT(*) FROM customer as cus ");
+			sqlCount.append(clause);
+			sqlCount = createSQLfindAll(sqlCount, properties);
+			Query queryCount = entityManager.createNativeQuery(sqlCount.toString());
+			
 			if (staffId != null) {
 				query.setParameter("staffId", staffId);
+				queryCount.setParameter("staffId", staffId);
 			}
+			
+			List<BigInteger> resultLst = queryCount.getResultList();
+			rs.setCount(Long.parseLong(resultLst.get(0).toString(), 10));
+			
+			
 			if (pageable != null) {
 				query.setFirstResult((int) pageable.getOffset());
 				query.setMaxResults(pageable.getPageSize());
 			}
 			List<CustomerEntity> lstRs = query.getResultList();
-			return lstRs;
+			rs.setCustomerEntities(lstRs);
+			return rs;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return new ArrayList<CustomerEntity>();
+		return new ListCustomerAndCount();
 	}
 
 	private StringBuilder createSQLfindAll(StringBuilder rs, Map<String, Object> properties) {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.nkm.api.input.building.AssignmentCustomerInput;
 import com.nkm.api.output.building.TotalItem;
+import com.nkm.api.output.customer.ListCustomerAndCount;
 import com.nkm.builder.CustomerSearchBuilder;
 import com.nkm.dto.AssignmentCustomerDTO;
 import com.nkm.dto.CustomerDTO;
@@ -31,7 +32,7 @@ public class CustomerAPI {
 	private ICustomerService customerService;
 
 	@GetMapping(value = { "/api/customer" })
-	public List<CustomerDTO> findAll(@RequestParam Map<String, Object> customerQuery) {
+	public ListCustomerAndCount findAll(@RequestParam Map<String, Object> customerQuery) {
 		CustomerSearchBuilder builder = initCustomerBuilder(customerQuery);
 		Integer page = Integer.parseInt((String) customerQuery.get("page"));
 		Integer maxPageItem = Integer.parseInt((String) customerQuery.get("maxPageItem"));

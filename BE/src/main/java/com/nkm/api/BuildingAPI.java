@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.nkm.api.input.building.AssignmentBuildingInput;
+import com.nkm.api.output.building.ListBuildingAndCount;
 import com.nkm.api.output.building.TotalItem;
 import com.nkm.builder.BuildingSearchBuilder;
 import com.nkm.dto.BuildingDTO;
@@ -41,7 +42,7 @@ public class BuildingAPI {
 	}
 	
 	@GetMapping(value = {"/api/building"})
-	public List<BuildingDTO> findAll(@RequestParam Map<String, Object> buildingQuery) {
+	public ListBuildingAndCount findAll(@RequestParam Map<String, Object> buildingQuery) {
 		BuildingSearchBuilder builder = initBuildingBuilder(buildingQuery);
 		Integer page = Integer.parseInt((String) buildingQuery.get("page"));
 		Integer maxPageItem = Integer.parseInt((String) buildingQuery.get("maxPageItem"));

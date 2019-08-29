@@ -2,6 +2,7 @@ package com.nkm.service;
 
 import java.util.List;
 
+import com.nkm.api.ListBuildingAndCount;
 import com.nkm.builder.BuildingSearchBuilder;
 import com.nkm.dto.BuildingDTO;
 import com.nkm.paging.Pageble;
@@ -17,4 +18,6 @@ public interface IBuildingService {
 	BuildingDTO findById(Long id);
 	void delete(Long[] ids);
 	BuildingDTO findById(String url);
+
+    ListBuildingAndCount findAllBuilding(String url);
 }

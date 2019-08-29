@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nkm.api.input.building.AssignmentCustomerInput;
+import com.nkm.api.output.customer.ListCustomerAndCount;
 import com.nkm.builder.CustomerSearchBuilder;
 import com.nkm.converter.AssignmentCustomerConverter;
 import com.nkm.converter.CustomerConverter;
@@ -52,10 +53,11 @@ public class CustomerService implements ICustomerService {
 	}
 
 	@Override
-	public List<CustomerDTO> findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId) {
-		List<CustomerEntity> lstEntities = customerRepository.findAll(builder, pageable, staffId);
-		List<CustomerDTO> lstDtos = lstEntities.stream().map(item -> customerConverter.convertToDTO(item)).collect(Collectors.toList());
-		return lstDtos;
+	public ListCustomerAndCount findAll(CustomerSearchBuilder builder, Pageable pageable, Long staffId) {
+		ListCustomerAndCount rs = customerRepository.findAll(builder, pageable, staffId);
+		rs.setCustomerDtos(rs.getCustomerEntities().stream().map(item -> customerConverter.convertToDTO(item)).collect(Collectors.toList()));
+		rs.setCustomerEntities(null);
+		return rs;
 	}
 
 	@Override

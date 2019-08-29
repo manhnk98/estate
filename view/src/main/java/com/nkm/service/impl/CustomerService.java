@@ -1,6 +1,7 @@
 package com.nkm.service.impl;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nkm.api.ListCustomerAndCount;
 import com.nkm.dto.AssignmentCustomerDTO;
 import com.nkm.dto.CustomerDTO;
 import com.nkm.service.ICustomerService;
@@ -71,5 +72,16 @@ public class CustomerService implements ICustomerService {
             logger.error(e.getMessage(), e);
         }
         return new ArrayList<>();
+    }
+
+    @Override
+    public ListCustomerAndCount findAllCustomer(String url) {
+        String result = HttpClientUtils.httpGet(url);
+        try {
+            return new ObjectMapper().readValue(result, ListCustomerAndCount.class);
+        } catch (IOException e) {
+            logger.error(e.getMessage(), e);
+        }
+        return new ListCustomerAndCount();
     }
 }

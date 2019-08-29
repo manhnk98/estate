@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.nkm.api.ListBuildingAndCount;
 import com.nkm.dto.UserDTO;
 import com.nkm.service.IUserService;
 import com.nkm.service.impl.UserService;
@@ -51,10 +52,15 @@ public class BuildingController extends HttpServlet{
 			url = "/views/building/list.jsp";
 			BuildingSearchBuilder builder = initBuildingBuider(model);
 			StringBuilder findAllAPI = initBuildingParams(model, builder, "http://localhost:8087/api/building");
-			StringBuilder getTotalItemAPI = initBuildingParams(model, builder, "http://localhost:8087/api/building/total");
-			model.setTotalItem(buildingService.getTotalItem(getTotalItemAPI.toString()));
-			model.setTotalPage((int) Math.ceil((double) model.getTotalItem()/model.getMaxPageItem()));
-			model.setListResults(buildingService.findAll(findAllAPI.toString()));
+            ListBuildingAndCount hihi = buildingService.findAllBuilding(findAllAPI.toString());
+            model.setTotalItem(hihi.getCount());
+            model.setTotalPage((int) Math.ceil((double) model.getTotalItem()/model.getMaxPageItem()));
+            model.setListResults(hihi.getBuildingDtos());
+
+//			model.setTotalItem(buildingService.getTotalItem(getTotalItemAPI.toString()));
+//			model.setTotalPage((int) Math.ceil((double) model.getTotalItem()/model.getMaxPageItem()));
+//			model.setListResults(buildingService.findAll(findAllAPI.toString()));
+
 		}else if(action.equals("EDIT")) {
 			if (model.getId() != null) {
 				String URLfindById = "http://localhost:8087/api/"+model.getId()+"/building";

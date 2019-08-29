@@ -1,4 +1,4 @@
-package com.nkm.api.output.building;
+package com.nkm.api;
 
 import java.util.List;
 

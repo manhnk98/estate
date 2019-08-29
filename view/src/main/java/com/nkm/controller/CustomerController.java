@@ -1,5 +1,6 @@
 package com.nkm.controller;
 
+import com.nkm.api.ListCustomerAndCount;
 import com.nkm.builder.CustomerSearchBuilder;
 import com.nkm.dto.AssignmentCustomerDTO;
 import com.nkm.dto.CustomerDTO;
@@ -46,9 +47,12 @@ public class CustomerController extends HttpServlet {
             CustomerSearchBuilder builder = initCustomerBuilder(model);
             StringBuilder findAllAPI = initCustomerParams(model, builder, "http://localhost:8087/api/customer");
             StringBuilder getTotalItemAPI = initCustomerParams(model, builder, "http://localhost:8087/api/customer/totalItem");
-            model.setTotalItem(customerService.getTotalItem(getTotalItemAPI.toString()));
+
+            ListCustomerAndCount hihi = customerService.findAllCustomer(findAllAPI.toString());
+
+            model.setTotalItem(hihi.getCount());
             model.setTotalPage((int) Math.ceil((double) model.getTotalItem()/model.getMaxPageItem()));
-            model.setListResults(customerService.findAll(findAllAPI.toString()));
+            model.setListResults(hihi.getCustomerDtos());
 
             StringBuilder findAllStaff = new StringBuilder("http://localhost:8087/api/user?role=STAFF");
             List<UserDTO> staffs = userService.findAll(findAllStaff.toString());

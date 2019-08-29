@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.nkm.api.input.building.AssignmentBuildingInput;
+import com.nkm.api.output.building.ListBuildingAndCount;
 import com.nkm.builder.BuildingSearchBuilder;
 import com.nkm.converter.BuildingConverter;
 import com.nkm.dto.BuildingDTO;
@@ -61,12 +62,11 @@ public class BuildingService implements IBuildingService{
 	}
 
 	@Override
-	public List<BuildingDTO> findAll(BuildingSearchBuilder builder, Pageable pageable) {
-		List<BuildingEntity> buildingEntities = buildingRepository.findAll(builder, pageable);
-		List<BuildingDTO> buildingDTOs = buildingEntities.stream()
-				.map(item -> buildingConverter.convertToDTO(item)).collect(Collectors.toList());
-		
-		return buildingDTOs;
+	public ListBuildingAndCount findAll(BuildingSearchBuilder builder, Pageable pageable) {
+		ListBuildingAndCount rs = buildingRepository.findAll(builder, pageable);
+		rs.setBuildingDtos(rs.getBuildingEntities().stream().map(item -> buildingConverter.convertToDTO(item)).collect(Collectors.toList()));
+		rs.setBuildingEntities(null);
+		return rs;
 	}
 
 	@Override
